@@ -3,8 +3,6 @@ package com.tfi.memoria;
 import com.tfi.model.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Memoria {
 

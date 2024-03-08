@@ -5,6 +5,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,14 +42,17 @@ public class AutorizacionPagoServiceImpl implements AutorizacionPagoService {
         return null;
     }
 
-    public boolean confirmarPago(String siteTransactionId, String token, double monto) {
+    public boolean confirmarPago(String siteTransactionId, String token, Double monto) {
+
+        int montoSinDecimal = monto.intValue();
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("apikey", apiKeyPayment);
 
         Map<String, Object> subPayment = new HashMap<>();
         subPayment.put("site_id", "");
-        subPayment.put("amount", monto);
+        subPayment.put("amount", montoSinDecimal);
         subPayment.put("installments", null);
 
         List<Map<String, Object>> subPayments = new ArrayList<>();
@@ -59,7 +63,7 @@ public class AutorizacionPagoServiceImpl implements AutorizacionPagoService {
         request.put("payment_method_id", 1);
         request.put("token", token);
         request.put("bin", "450799");
-        request.put("amount", monto);
+        request.put("amount", montoSinDecimal);
         request.put("currency", "ARS");
         request.put("installments", 1);
         request.put("description", "");
@@ -67,12 +71,8 @@ public class AutorizacionPagoServiceImpl implements AutorizacionPagoService {
         request.put("establishment_name", "single");
         request.put("sub_payments", subPayments);
 
-        System.out.println("Request: " + request);
-
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(request, headers);
         ResponseEntity<Map> response = restTemplate.exchange("https://developers.decidir.com/api/v2/payments", HttpMethod.POST, entity, Map.class);
-
-        System.out.println("Response: " + response);
 
         if (response.getStatusCode() == HttpStatus.CREATED) {
             Map<String, Object> responseBody = response.getBody();

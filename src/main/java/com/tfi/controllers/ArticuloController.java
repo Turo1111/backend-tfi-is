@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("articulo")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ArticuloController {
 
     @Autowired
@@ -25,6 +25,11 @@ public class ArticuloController {
     @GetMapping("/find/{codigo}")
     public Optional<Articulo> getArticuloByCodigo(@PathVariable("codigo") String codigo){
         return articuloService.getArticuloByCodigo(codigo);
+    }
+
+    @PostMapping("/save")
+    public Articulo saveArticulo(@RequestBody Articulo articulo){
+        return articuloService.saveArticulo(articulo);
     }
 
 }

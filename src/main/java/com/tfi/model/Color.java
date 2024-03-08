@@ -1,20 +1,28 @@
 package com.tfi.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "colors")
 public class Color {
 
-    long id;
-    String descripcion;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+    private String descripcion;
 
-    public Color(long id, String descripcion) {
+    public Color(String id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

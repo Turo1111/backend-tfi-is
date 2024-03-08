@@ -2,6 +2,8 @@ package com.tfi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
+
 public class PagoTarjeta extends Pago {
 
     private String card_number;
@@ -12,14 +14,7 @@ public class PagoTarjeta extends Pago {
     @JsonProperty("card_holder_identification")
     private IdentificacionCliente card_holder_identification;
 
-    public PagoTarjeta(String card_number, String card_expiration_month, String card_expiration_year, String security_code, String card_holder_name, IdentificacionCliente card_holder_identification) {
-
-        this.card_number = card_number;
-        this.card_expiration_month = card_expiration_month;
-        this.card_expiration_year = card_expiration_year;
-        this.security_code = security_code;
-        this.card_holder_name = card_holder_name;
-        this.card_holder_identification = card_holder_identification;
+    public PagoTarjeta() {
     }
 
     public String getCard_number() {

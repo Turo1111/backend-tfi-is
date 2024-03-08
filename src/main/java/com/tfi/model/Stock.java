@@ -1,9 +1,25 @@
 package com.tfi.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "stock")
 public class Stock {
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+
+    @DBRef
     private Articulo articulo;
+
+    @DBRef
     private Talle talle;
+
+    @DBRef
     private Color color;
 
     private Number cantidad;
@@ -11,7 +27,7 @@ public class Stock {
     public Stock() {
     }
 
-    public Stock(long id, Articulo articulo, Talle talle, Color color, Number cantidad) {
+    public Stock(String id, Articulo articulo, Talle talle, Color color, Number cantidad) {
         this.id = id;
         this.articulo = articulo;
         this.talle = talle;
@@ -19,11 +35,11 @@ public class Stock {
         this.cantidad = cantidad;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

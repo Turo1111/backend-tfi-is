@@ -1,5 +1,6 @@
 package com.tfi.controllers;
 
+import com.tfi.model.Articulo;
 import com.tfi.model.Stock;
 import com.tfi.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class StockController {
 
     @GetMapping("/getStock/{codigo}")
     public List<Stock> getStock(@PathVariable("codigo") String codigo){
-        return stockService.getAllStock(codigo);
+        return stockService.getStockByCodigo(codigo);
+    }
+
+    @PostMapping("/save")
+    public Stock saveStock(@RequestBody Stock stock) {
+        return stockService.saveStock(stock);
     }
 }

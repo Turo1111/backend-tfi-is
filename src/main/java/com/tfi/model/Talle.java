@@ -1,12 +1,23 @@
 package com.tfi.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "talles")
 public class Talle {
 
-    long id;
-    String descripcion;
-    TipoTalle tipoTalle;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+    private String descripcion;
 
-    public Talle(long id, String descripcion, TipoTalle tipoTalle) {
+    @DBRef
+    private TipoTalle tipoTalle;
+
+    public Talle(String id, String descripcion, TipoTalle tipoTalle) {
         this.id = id;
         this.descripcion = descripcion;
         this.tipoTalle = tipoTalle;
@@ -20,11 +31,11 @@ public class Talle {
         this.tipoTalle = tipoTalle;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

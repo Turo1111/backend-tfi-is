@@ -9,7 +9,7 @@ public class Comprobante extends Venta {
     public Comprobante() {
     }
 
-    public Comprobante(long numeroVenta, Date fecha, double total, Pago pago, PuntoVenta puntoVenta, long numero, List<LineaVenta> lineasVenta) {
+    public Comprobante(String numeroVenta, Date fecha, double total, Pago pago, PuntoVenta puntoVenta, long numero, List<LineaVenta> lineasVenta) {
         super(numeroVenta, fecha, total, pago, puntoVenta, lineasVenta);
         this.numero = numero;
     }

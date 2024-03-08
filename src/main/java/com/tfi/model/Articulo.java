@@ -1,8 +1,15 @@
 package com.tfi.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 
+@Document(collection = "articulos")
 public class Articulo {
+
+    @Id
     private String codigo;
     private String descripcion;
     private double costo;
@@ -10,16 +17,29 @@ public class Articulo {
     private double netoGravado;
     private double iva;
     private double precioVenta;
+
+    @DBRef
     private Categoria categoria;
+
+    @DBRef
     private Marca marca;
-    private ArrayList<Talle> talle;
-    private ArrayList<Color> color;
 
     public Articulo() {
 
     }
 
-    public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double iva, Categoria categoria, Marca marca, ArrayList<Talle> talle, ArrayList<Color> color) {
+    public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double netoGravado, double iva, double precioVenta, Categoria categoria, Marca marca) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.costo = costo;
+        this.margenGanancia = margenGanancia;
+        this.netoGravado = netoGravado;
+        this.iva = iva;
+        this.precioVenta = precioVenta;
+        this.categoria = categoria;
+        this.marca = marca;
+    }
+/*public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double iva, Categoria categoria, Marca marca) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.costo = costo;
@@ -29,10 +49,8 @@ public class Articulo {
         this.precioVenta = (costo + costo * margenGanancia)+((costo + costo * margenGanancia)*(iva/100));
         this.categoria = categoria;
         this.marca = marca;
-        this.talle = talle;
-        this.color = color;
 
-    }
+    }*/
 
     public String getCodigo() {
         return codigo;
@@ -105,21 +123,5 @@ public class Articulo {
 
     public void setMarca(Marca marca) {
         this.marca = marca;
-    }
-
-    public ArrayList<Talle> getTalle() {
-        return talle;
-    }
-
-    public void setTalle(ArrayList<Talle> talle) {
-        this.talle = talle;
-    }
-
-    public ArrayList<Color> getColor() {
-        return color;
-    }
-
-    public void setColor(ArrayList<Color> color) {
-        this.color = color;
     }
 }

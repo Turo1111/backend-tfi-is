@@ -14,7 +14,7 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 
-		Categoria tecnologia = new Categoria(1, "Tecnología");
+		/*Categoria tecnologia = new Categoria(1, "Tecnología");
 		Categoria ropa = new Categoria(2, "Ropa");
 		Categoria comida = new Categoria(3, "Comida");
 
@@ -84,7 +84,7 @@ public class Application {
 		Memoria.AgregarStocks(stock12);
 		Memoria.AgregarStocks(stock13);
 		Memoria.AgregarStocks(stock14);
-		Memoria.AgregarStocks(stock15);
+		Memoria.AgregarStocks(stock15);*/
 
 	}
 

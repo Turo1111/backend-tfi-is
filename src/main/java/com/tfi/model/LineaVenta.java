@@ -1,30 +1,43 @@
 package com.tfi.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "lineaVenta")
 public class LineaVenta {
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private Number cantidad;
-    private double subTotal;
     private double total;
+
+    //@JsonIgnore
+    @DBRef
     private Venta venta;
-    private Articulo articulo;
+    //@JsonIgnore
+    @DBRef
+    private Stock stock;
 
     public LineaVenta() {
     }
 
-    public LineaVenta(long id, Number cantidad, double subTotal, double total, Venta venta, Articulo articulo) {
+    public LineaVenta(String id, Number cantidad, double total, Venta venta, Stock stock) {
         this.id = id;
         this.cantidad = cantidad;
-        this.subTotal = subTotal;
         this.total = total;
         this.venta = venta;
-        this.articulo = articulo;
+        this.stock = stock;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -34,14 +47,6 @@ public class LineaVenta {
 
     public void setCantidad(Number cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public double getSubTotal() {
-        return subTotal;
-    }
-
-    public void setSubTotal(double subTotal) {
-        this.subTotal = subTotal;
     }
 
     public double getTotal() {
@@ -60,11 +65,11 @@ public class LineaVenta {
         this.venta = venta;
     }
 
-    public Articulo getArticulo() {
-        return articulo;
+    public Stock getStock() {
+        return stock;
     }
 
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 }
