@@ -37,8 +37,8 @@ public class VentaController {
                         Venta ventaRealizada = ventaService.saveVenta(v);
                         ventaService.savePago(v.getPago());
                         for (LineaVenta lineaVenta : ventaRealizada.getLineaVenta()) {
-                            lineaVenta.setVenta(ventaRealizada); // Asigna la venta a la línea de venta
-                            ventaService.saveLineaVenta(lineaVenta); // Guarda la línea de venta en la base de datos
+                            lineaVenta.setVenta(ventaRealizada);
+                            ventaService.saveLineaVenta(lineaVenta);
                             Stock stock = lineaVenta.getStock();
                             int cantidadVendida = lineaVenta.getCantidad().intValue();
                             stock.setCantidad(stock.getCantidad().intValue() - cantidadVendida);
@@ -57,8 +57,8 @@ public class VentaController {
         Venta ventaRealizada = ventaService.saveVenta(v);
         ventaService.savePago(v.getPago());
         for (LineaVenta lineaVenta : ventaRealizada.getLineaVenta()) {
-            lineaVenta.setVenta(ventaRealizada); // Asigna la venta a la línea de venta
-            ventaService.saveLineaVenta(lineaVenta); // Guarda la línea de venta en la base de datos
+            lineaVenta.setVenta(ventaRealizada);
+            ventaService.saveLineaVenta(lineaVenta);
             Stock stock = lineaVenta.getStock();
             int cantidadVendida = lineaVenta.getCantidad().intValue();
             stock.setCantidad(stock.getCantidad().intValue() - cantidadVendida);

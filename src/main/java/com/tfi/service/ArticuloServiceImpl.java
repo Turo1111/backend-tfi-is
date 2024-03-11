@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
- @Service
+@Service
 public class ArticuloServiceImpl implements ArticuloService {
 
     @Autowired

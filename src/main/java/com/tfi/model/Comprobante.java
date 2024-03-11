@@ -3,15 +3,17 @@ package com.tfi.model;
 import java.util.Date;
 import java.util.List;
 
-public class Comprobante extends Venta {
+public class Comprobante {
     private long numero;
+
+    private TipoComprobante tipoComprobante;
 
     public Comprobante() {
     }
 
-    public Comprobante(String numeroVenta, Date fecha, double total, Pago pago, PuntoVenta puntoVenta, long numero, List<LineaVenta> lineasVenta) {
-        super(numeroVenta, fecha, total, pago, puntoVenta, lineasVenta);
+    public Comprobante(long numero, TipoComprobante tipoComprobante) {
         this.numero = numero;
+        this.tipoComprobante = tipoComprobante;
     }
 
     public long getNumero() {
@@ -21,4 +23,13 @@ public class Comprobante extends Venta {
     public void setNumero(long numero) {
         this.numero = numero;
     }
+
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
+    }
 }
+

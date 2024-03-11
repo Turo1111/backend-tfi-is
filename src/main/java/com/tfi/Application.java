@@ -1,14 +1,17 @@
 package com.tfi;
 
+import com.tfi.config.AppConfig;
 import com.tfi.memoria.Memoria;
 import com.tfi.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
+@Import(AppConfig.class)
 public class Application {
 
 	public static void main(String[] args) {
