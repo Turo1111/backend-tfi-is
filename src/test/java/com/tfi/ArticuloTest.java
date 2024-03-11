@@ -2,9 +2,13 @@ package com.tfi;
 
 import com.tfi.controllers.ArticuloController;
 import com.tfi.model.Articulo;
+import io.cucumber.junit.Cucumber;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
