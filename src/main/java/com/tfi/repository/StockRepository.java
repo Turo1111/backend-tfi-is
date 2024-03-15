@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface StockRepository extends MongoRepository<Stock, String> {
-
     List<Stock> findByArticulo_Codigo(String codigo);
 
 }

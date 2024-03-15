@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 @Document(collection = "articulos")
@@ -27,30 +28,22 @@ public class Articulo {
     public Articulo() {
 
     }
-
-    public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double netoGravado, double iva, double precioVenta, Categoria categoria, Marca marca) {
+   public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double iva, Categoria categoria, Marca marca) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        double netoGravadoCalculado = costo + costo * (margenGanancia / 100);
+        double precioVentaCalculado = netoGravadoCalculado + (netoGravadoCalculado * (iva / 100));
+        netoGravadoCalculado = Double.parseDouble(df.format(netoGravadoCalculado));
+        precioVentaCalculado = Double.parseDouble(df.format(precioVentaCalculado));
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.costo = costo;
         this.margenGanancia = margenGanancia;
-        this.netoGravado = netoGravado;
+        this.netoGravado = netoGravadoCalculado;
         this.iva = iva;
-        this.precioVenta = precioVenta;
+        this.precioVenta = precioVentaCalculado;
         this.categoria = categoria;
         this.marca = marca;
     }
-/*public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double iva, Categoria categoria, Marca marca) {
-        this.codigo = codigo;
-        this.descripcion = descripcion;
-        this.costo = costo;
-        this.margenGanancia = margenGanancia;
-        this.netoGravado = costo + costo * margenGanancia;
-        this.iva = iva;
-        this.precioVenta = (costo + costo * margenGanancia)+((costo + costo * margenGanancia)*(iva/100));
-        this.categoria = categoria;
-        this.marca = marca;
-
-    }*/
 
     public String getCodigo() {
         return codigo;

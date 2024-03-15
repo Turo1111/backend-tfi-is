@@ -27,20 +27,21 @@ public class ArticuloTestCucumber {
 
     @Given("existe un artículo con el código {string} en la base de datos")
     public void existe_un_artículo_con_el_código_en_la_base_de_datos(String codigo) {
-        // Mock del controlador de Artículo
+        // Creacion del mock ArticuloController
         articuloController = Mockito.mock(ArticuloController.class);
 
-        // Configurar el comportamiento del mock para devolver un artículo
         Categoria categoria = new Categoria("C001", "Remeras");
         Marca marca = new Marca("M001", "Nike");
-        Articulo mockArticulo = new Articulo("1", "Descripción de prueba", 100.0, 0.1, 0.0, 0.0, 110.0, categoria, marca);
+        Articulo mockArticulo = new Articulo("1", "Descripción de prueba", 937.69, 20.0, 21.0, categoria, marca);
 
+        // Configurar del comportamiento del mock
         Mockito.when(articuloController.getArticuloByCodigo(codigo)).thenReturn(Optional.of(mockArticulo));
+
     }
 
     @When("se consulta el artículo con el código {string}")
     public void se_consulta_el_artículo_con_el_código(String codigo) {
-        // Llamar al método del controlador de Artículo con el código proporcionado
+        // Llamar al método del controlador de Artículo con el código
         articulo = articuloController.getArticuloByCodigo(codigo);
     }
 
@@ -49,7 +50,5 @@ public class ArticuloTestCucumber {
         // Verificar que el artículo devuelto no sea nulo y esté presente
         assertNotNull(articulo);
         assertTrue(articulo.isPresent());
-
-        // También puedes agregar otras verificaciones según sea necesario
     }
 }

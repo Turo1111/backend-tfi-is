@@ -26,25 +26,34 @@ public class VentaController {
 
     @PostMapping("/save")
     public Object saveVenta(@RequestBody Venta v){
+        //Verificamos que exista pago
         if (v.getPago() != null && v.getPago().getTipoPago() != null) {
+            //Tomamos el pago de lo recibido en el body
             TipoPago tipoPago = v.getPago().getTipoPago();
+            //Verificamos si es pago con tarjeta
             if (tipoPago.equals(TipoPago.TarjetaDebito) || tipoPago.equals(TipoPago.TarjetaCredito)){
+                //Generamos la id de la transaccion
                 String siteTransactionId = UUID.randomUUID().toString();
+                //Obtenemos el token de la api de autorizacion de pago
                 String token = autorizacionPagoService.solicitarTokenPago(v.getPago().getPagoTarjeta());
+                //Verificamos si el token existe y no es nulo
                 if (token != null) {
+                    //Consultamos a la api de autorizacion si se confirma el pago
                     boolean pagoAprobado = autorizacionPagoService.confirmarPago(siteTransactionId, token, v.getPago().getMonto());
                     if (pagoAprobado) {
+                        //Guardamos el pago en la bd
                         Venta ventaRealizada = ventaService.saveVenta(v);
                         ventaService.savePago(v.getPago());
                         for (LineaVenta lineaVenta : ventaRealizada.getLineaVenta()) {
+                            //Guardamos linea de venta y lo relacionamos con venta
                             lineaVenta.setVenta(ventaRealizada);
                             ventaService.saveLineaVenta(lineaVenta);
+                            //Descontamos el stock en la bd
                             Stock stock = lineaVenta.getStock();
                             int cantidadVendida = lineaVenta.getCantidad().intValue();
                             stock.setCantidad(stock.getCantidad().intValue() - cantidadVendida);
                             stockService.saveStock(stock);
                         }
-
                         return "Pago con tarjeta realizado correctamente";
                     } else {
                         return null;
@@ -54,6 +63,7 @@ public class VentaController {
                 }
             }
         }
+        //Si no se realiza el pago con tarjeta entonces guardamos como pago efectivo
         Venta ventaRealizada = ventaService.saveVenta(v);
         ventaService.savePago(v.getPago());
         for (LineaVenta lineaVenta : ventaRealizada.getLineaVenta()) {

@@ -22,18 +22,6 @@ public class ArticuloServiceImpl implements ArticuloService {
     @Override
     public List<Articulo> getAllArticulo() {
         List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll();
-        DecimalFormat df = new DecimalFormat("#.##");
-        for (Articulo articulo : articulos) {
-            double costo = articulo.getCosto();
-            double margenGanancia = articulo.getMargenGanancia();
-            double iva = articulo.getIva();
-            double netoGravado = costo + costo * (margenGanancia / 100);
-            double precioVenta = netoGravado + (netoGravado * (iva / 100));
-            netoGravado = Double.parseDouble(df.format(netoGravado));
-            precioVenta = Double.parseDouble(df.format(precioVenta));
-            articulo.setNetoGravado(netoGravado);
-            articulo.setPrecioVenta(precioVenta);
-        }
         return articulos;
     }
 

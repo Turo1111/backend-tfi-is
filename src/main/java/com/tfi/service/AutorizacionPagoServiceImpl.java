@@ -29,12 +29,16 @@ public class AutorizacionPagoServiceImpl implements AutorizacionPagoService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("apikey", apiKeyToken);
 
+        //Armamos estructura de la consulta
         HttpEntity<PagoTarjeta> entity = new HttpEntity<>(pagoTarjeta, headers);
+        //Conseguimos la respuesta de la consulta
         ResponseEntity<Map> response = restTemplate.exchange("https://developers.decidir.com/api/v2/tokens", HttpMethod.POST, entity, Map.class);
 
+        //Verificamos el estado de la consulta
         if (response.getStatusCode() == HttpStatus.CREATED) {
             Map<String, Object> responseBody = response.getBody();
             if (responseBody != null && responseBody.containsKey("id")) {
+                //Retornamos el token
                 return (String) responseBody.get("id");
             }
         }
@@ -44,12 +48,15 @@ public class AutorizacionPagoServiceImpl implements AutorizacionPagoService {
 
     public boolean confirmarPago(String siteTransactionId, String token, Double monto) {
 
+        //Lo pasamos a entero porque teniamos error con los decimales
         int montoSinDecimal = monto.intValue();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("apikey", apiKeyPayment);
 
+
+        //Generamos la estructuras de los objetos para el Request
         Map<String, Object> subPayment = new HashMap<>();
         subPayment.put("site_id", "");
         subPayment.put("amount", montoSinDecimal);
@@ -71,13 +78,18 @@ public class AutorizacionPagoServiceImpl implements AutorizacionPagoService {
         request.put("establishment_name", "single");
         request.put("sub_payments", subPayments);
 
+        //Armamos estructura de la consulta
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(request, headers);
+        //Conseguimos la respuesta de la consulta
         ResponseEntity<Map> response = restTemplate.exchange("https://developers.decidir.com/api/v2/payments", HttpMethod.POST, entity, Map.class);
 
+        //Verificamos el estado de la consulta
         if (response.getStatusCode() == HttpStatus.CREATED) {
             Map<String, Object> responseBody = response.getBody();
             if (responseBody != null && responseBody.containsKey("status")) {
+                //Obtenemos el estado de la respuesta
                 String status = (String) responseBody.get("status");
+                //Devolvemos el estado de la respuesta
                 return "approved".equalsIgnoreCase(status);
             }
         }
