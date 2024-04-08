@@ -24,6 +24,8 @@ public class Venta {
     //@JsonIgnore
     private List<LineaVenta> lineaVenta;
 
+    private Cliente cliente;
+
     public Venta() {
     }
 
@@ -34,6 +36,14 @@ public class Venta {
         this.pago = pago;
         this.puntoVenta = puntoVenta;
         this.lineaVenta = lineaVenta;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public List<LineaVenta> getLineaVenta() {

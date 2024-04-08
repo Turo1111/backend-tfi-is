@@ -5,6 +5,7 @@ import com.tfi.model.Stock;
 import com.tfi.model.Venta;
 import com.tfi.model.enums.TipoPago;
 import com.tfi.service.AutorizacionPagoService;
+import com.tfi.service.ClienteService;
 import com.tfi.service.StockService;
 import com.tfi.service.VentaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class VentaController {
     AutorizacionPagoService autorizacionPagoService;
     @Autowired
     StockService stockService;
+    @Autowired
+    ClienteService clienteService;
 
     @PostMapping("/save")
     public Object saveVenta(@RequestBody Venta v){
@@ -44,6 +47,7 @@ public class VentaController {
                         //Guardamos el pago en la bd
                         Venta ventaRealizada = ventaService.saveVenta(v);
                         ventaService.savePago(v.getPago());
+                        clienteService.saveCliente(v.getCliente());
                         for (LineaVenta lineaVenta : ventaRealizada.getLineaVenta()) {
                             //Guardamos linea de venta y lo relacionamos con venta
                             lineaVenta.setVenta(ventaRealizada);
@@ -66,6 +70,7 @@ public class VentaController {
         //Si no se realiza el pago con tarjeta entonces guardamos como pago efectivo
         Venta ventaRealizada = ventaService.saveVenta(v);
         ventaService.savePago(v.getPago());
+        clienteService.saveCliente(v.getCliente());
         for (LineaVenta lineaVenta : ventaRealizada.getLineaVenta()) {
             lineaVenta.setVenta(ventaRealizada);
             ventaService.saveLineaVenta(lineaVenta);

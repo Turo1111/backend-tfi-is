@@ -26,7 +26,7 @@ public class ArticuloController {
 
     @GetMapping("/find/{codigo}")
     public Optional<Articulo> getArticuloByCodigo(@PathVariable("codigo") String codigo){
-        return articuloService.getArticuloByCodigo(codigo);
+        var resultado =  articuloService.getArticuloByCodigo(codigo)
     }
 
     @PostMapping("/save")

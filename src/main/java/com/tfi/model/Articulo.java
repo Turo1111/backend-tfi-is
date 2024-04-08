@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 
 @Document(collection = "articulos")
 public class Articulo {
@@ -28,8 +30,8 @@ public class Articulo {
     public Articulo() {
 
     }
-   public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double iva, Categoria categoria, Marca marca) {
-        DecimalFormat df = new DecimalFormat("#.##");
+    public Articulo(String codigo, String descripcion, double costo, double margenGanancia, double iva, Categoria categoria, Marca marca) {
+        DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
         double netoGravadoCalculado = costo + costo * (margenGanancia / 100);
         double precioVentaCalculado = netoGravadoCalculado + (netoGravadoCalculado * (iva / 100));
         netoGravadoCalculado = Double.parseDouble(df.format(netoGravadoCalculado));
